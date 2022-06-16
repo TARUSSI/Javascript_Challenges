@@ -15,7 +15,24 @@ export const keyValueInLower = (randomKey, attributeToCheck) => {
 }
 
 export const checkIfSameKeys = (event, randomKey, attributeToCheck) => {
-    return event.key.toLowerCase() === keyValueInLower(randomKey, attributeToCheck);
+    let event_key;
+    if (event.key === "Dead"){
+        switch (event.code){
+            case "Quote":
+                event_key = "'";
+                break;
+            case "Backquote":
+                event_key = "`";
+                break;
+            default:
+                break;
+        }
+    }
+    else{
+        event_key = event.key.toLowerCase();
+    }
+
+    return event_key === keyValueInLower(randomKey, attributeToCheck);
 }
 
 export const updateRandomKey = (keys) => {
