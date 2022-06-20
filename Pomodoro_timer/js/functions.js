@@ -148,14 +148,10 @@ export const clickStart = () => {
         if ( checkValid( getValue(minutes), getValue(seconds) ) ) {
             // if setting button is pressed (i.e., time has been updated)
             if (settingOn){
-                // update timer
                 updateTimer();
             }
-            // change color of ringto green
             changeRingGreen(ring);
-            // change start button to stop button
             updateTexInside(startStopButton, "stop");
-            // start timer
             startTimer();
         }
         else{
@@ -165,7 +161,6 @@ export const clickStart = () => {
     // if stop button was pressed
     else{
         updateTexInside(startStopButton, "start");
-        // stop timer
         stopTimer(); 
     }
 }
