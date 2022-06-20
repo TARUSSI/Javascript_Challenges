@@ -48,7 +48,7 @@ const editTime = (element, allow) => {
 }
 
 // function checks if the time on the timer is correct or not
-const checkCorrect = (timeValue) => {
+const isCorrect = (timeValue) => {
     // checks if the the valus is a number or not
     if ( !isNaN(timeValue) 
     // checks if the value is a number between 0 and 60 or not
@@ -62,16 +62,16 @@ const checkCorrect = (timeValue) => {
 }
 
 // function checks if the time is over or not (00:00)
-const checkTimeOver = (minutesInput, secondsInput) => {
+const isTimeOver = (minutesInput, secondsInput) => {
     return ( parseInt(minutesInput)===0 && parseInt(secondsInput)===0 ) ? true : false;
 }
 
 // function checks if the time entered is valid or not
-const checkValid = (minutesInput, secondsInput) => {
+const isValid = (minutesInput, secondsInput) => {
     // checks if the time is a valid number or not
-    if ( checkCorrect(minutesInput) && checkCorrect(secondsInput)  ) {
+    if ( isCorrect(minutesInput) && isCorrect(secondsInput)  ) {
         // checks if the value is 00:00 or not
-        if ( checkTimeOver(minutesInput, secondsInput) ) {
+        if ( isTimeOver(minutesInput, secondsInput) ) {
             return false;
         }
         else{
@@ -132,7 +132,7 @@ const countDown = () => {
     updateValue(minutes, minutesRemain);
 
     // checking if the time is over or not
-    if ( checkTimeOver( getValue(minutes), getValue(seconds) ) ){
+    if ( isTimeOver( getValue(minutes), getValue(seconds) ) ){
         stopTimer();
         updateTexInside(startStopButton, "start");
         changeRingRed(ring);
@@ -145,7 +145,7 @@ export const clickStart = () => {
     // if the start button was pressed
     if ( getTextInside(startStopButton) === "start" ){
         // if the time on the timer is valid
-        if ( checkValid( getValue(minutes), getValue(seconds) ) ) {
+        if ( isValid( getValue(minutes), getValue(seconds) ) ) {
             // if setting button is pressed (i.e., time has been updated)
             if (settingOn){
                 updateTimer();
