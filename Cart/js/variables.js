@@ -43,8 +43,13 @@ export const menuItems = [
     }
 ];
 
+// variable to store tax rate
 export const taxRate = 0.0975;
+// variable to store left side cart
 export const leftCart = document.querySelectorAll(".menu")[1];
+// variable to store buttons on the left side cart 
 export const cartButtons = leftCart.querySelectorAll("button");
+// variable to store top right portion of cart, which has all items
 export const rightTopCart = document.querySelectorAll(".cart-summary")[0];
+// variable to store bottom right portion of cart, which has all cost
 export const rightBottomCart = document.querySelectorAll(".totals")[0];

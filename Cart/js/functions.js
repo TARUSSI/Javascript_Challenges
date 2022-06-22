@@ -1,8 +1,11 @@
 import {menuItems, taxRate, leftCart, cartButtons, rightTopCart, rightBottomCart} from "./variables.js"
 
+// variable stores all buttons which increases the quantity of item
 let increaseButton = document.querySelectorAll(".increase");
+// variable stores all buttons which decreases the quantity of item
 let decreaseButton = document.querySelectorAll(".decrease");
 
+// function creates an image tag
 const createImgTag = (imgSrc, altName = null, className = null) => {
     let imgTag = document.createElement("img");
     imgTag.src = imgSrc;
@@ -11,6 +14,7 @@ const createImgTag = (imgSrc, altName = null, className = null) => {
     return imgTag;
 }
 
+// function creates a div tag
 const createDivTag = (classValue = null, value=null) => {
     let divTag = document.createElement("div");
     divTag.innerText = value; 
@@ -18,6 +22,7 @@ const createDivTag = (classValue = null, value=null) => {
     return divTag;
 }
 
+// function creates a p tag
 const createPTag = (classValue, value) => {
     let pTag = document.createElement("p");
     pTag.innerText = value; 
@@ -25,12 +30,14 @@ const createPTag = (classValue, value) => {
     return pTag;
 }
 
+// function creates a button tag
 const createButtonTag = (classValue) => {
     let buttonTag = document.createElement("button");
     buttonTag.classList.add(classValue);
     return buttonTag;
 }
 
+// function changes button "Add to Cart" to "In Cart"
 const setButtonToInCart = (element) => {
     element.classList.add("in-cart");
     element.classList.remove("add");
@@ -39,14 +46,14 @@ const setButtonToInCart = (element) => {
     element.insertAdjacentElement("afterbegin", imgTag);
 }
 
+// function changes button "In Cart" to "Add to Cart"
 const setButtonToAddToCart = (element) => {
     element.classList.add("add");
     element.classList.remove("in-cart");
     element.innerText = "Add to Cart";
-    // let imgTag = element.querySelector("img");
-    // imgTag.remove();
 } 
 
+// function adds image of item to the cart
 const addImageToCart = (foodItem, cart) => {
     let divTag = createDivTag();
     let imgSrc = "images/" + menuItems[foodItem].image;
@@ -59,6 +66,7 @@ const addImageToCart = (foodItem, cart) => {
     cart.appendChild(divTag);
 }
 
+// function adds details of item to cart
 const addNameToCart = (foodItem, cart) => {
     let divTag = createDivTag("content");
     
@@ -68,6 +76,7 @@ const addNameToCart = (foodItem, cart) => {
     cart.appendChild(divTag);
 }
 
+// function adds increase/decrease buttons for item to cart
 const addButtonsToCart = (cart) => {
     let divTag = createDivTag("quantity__wrapper");
     let decreaseButton = createButtonTag("decrease");
@@ -84,11 +93,13 @@ const addButtonsToCart = (cart) => {
     cart.appendChild(divTag);
 }
 
+// function adds price to cart
 const addPriceToCart = (foodItem, cart) => {
     let divTag = createDivTag("subtotal", "$" + menuItems[foodItem].price);
     cart.append(divTag);
 }
 
+// function creates a component with all item details and adds it to cart
 const createComponent = (foodItem) =>{
     let liTag = document.createElement("li");
     //first div component
@@ -103,21 +114,25 @@ const createComponent = (foodItem) =>{
     return liTag;
 }
 
+// function finds the item on the left sde and adds it to right side 
 const addToCart = (element, list, cart) => {
     let indexOfElement = getIndex(element, list);
     cart.appendChild( createComponent(indexOfElement) );
 }
 
+// function removes item from cart
 const removeFromCart = (foodItem) => {
     foodItem.remove();
 }
 
+// function returns the cost of each item on cart
 const getCost = (element) => {
     let cost = element.innerText;
     cost = cost.replace("$", "");
     return parseFloat(cost);
 }
 
+// function finds subcost of all items in cart
 const costInCart = (cart) => {
     let individualCost = cart.querySelectorAll(".subtotal");
     let sumOfCost = 0;
@@ -129,10 +144,12 @@ const costInCart = (cart) => {
     return sumOfCost.toFixed(2);
 } 
 
+// function checks if cart is empty or not
 const isCartEmpty = (cart) => {
     return cart.querySelectorAll("li").length === 0;
 }
 
+// function checks if item is already in cart or not
 const isAlreadyInCart = (element) => {
     if (element.className === "in-cart"){
         return true;
@@ -140,22 +157,27 @@ const isAlreadyInCart = (element) => {
     return false;
 }
 
+// function checks if the quantity of item in cart is zero or not
 const isQuantityZero = (foodItem) => {
     return parseInt( foodItem.querySelector(".quantity").innerText ) === 0;
 }
 
-const emptyCartMessage = () => {
+// function displays message that cart is empty
+const displayEmptyCartMessage = () => {
     document.querySelector(".empty").style.visibility = "visible";
 }
 
+// function hides the message that cart is empty
 const hideEmptyCartMessage = () => {
     document.querySelector(".empty").style.visibility = "hidden";
 }
 
+// function finds index of element in a list
 const getIndex = (element, list) => {
     return Array.prototype.indexOf.call(list, element);
 }
 
+// function updates the quantity of item selected
 const changeAmount = (foodItem, change) => {
     let amount = foodItem.querySelectorAll(".quantity");
     amount.forEach(element => {
@@ -163,6 +185,7 @@ const changeAmount = (foodItem, change) => {
     });
 }
 
+// function updates subtotal of all items in cart
 const updateSubtotal = (foodItem) => {
     let cost = foodItem.querySelector(".price");
     let subtotal = foodItem.querySelector(".subtotal"); 
@@ -171,6 +194,7 @@ const updateSubtotal = (foodItem) => {
     subtotal.innerText = "$" + total;
 }
 
+// function updates total cost in cart
 const updateTotalCost = (topCart, bottomCart) => {
     let allCost = bottomCart.querySelectorAll(".amount");
     let subtotal = parseFloat( costInCart(topCart) );
@@ -183,11 +207,13 @@ const updateTotalCost = (topCart, bottomCart) => {
 
 }
 
+// function updates the list containing all increase/decrease buttons
 const updateButtonList = () => {
     increaseButton = document.querySelectorAll(".increase");
     decreaseButton = document.querySelectorAll(".decrease");
 }
 
+// function finds the position of item selected on left side cart
 const findOnLeftCart = (foodItem, cart) => {
     let foodName = foodItem.querySelector(".menu-item").innerText;
     let indexOnLeft = menuItems.findIndex( x => x.name === foodName );
@@ -195,6 +221,7 @@ const findOnLeftCart = (foodItem, cart) => {
     return item[indexOnLeft].querySelector("button");
 }
 
+// function finds which button was pressed
 const findButtonPressed = (buttonPressed, buttonList) => {
     if ( getIndex(buttonPressed.path[1], buttonList) != -1 ){
         return getIndex(buttonPressed.path[1], buttonList)
@@ -202,6 +229,7 @@ const findButtonPressed = (buttonPressed, buttonList) => {
     return getIndex(buttonPressed.path[0], buttonList)
 }
 
+// function changes the quantity of items in cart
 const incDecAmount = (button, change) => {
     let foodItem = rightTopCart.querySelectorAll("li")[button];
 
@@ -214,13 +242,14 @@ const incDecAmount = (button, change) => {
         updateButtonList();
     }
     if ( isCartEmpty(rightTopCart) ){
-        emptyCartMessage();
+        displayEmptyCartMessage();
     }
     updateSubtotal(foodItem);
     updateTotalCost(rightTopCart, rightBottomCart);
 
 }
 
+// function adds item to right side cart
 const clickAddToCart = (element) => {
     if ( !isAlreadyInCart(element)  ){
         hideEmptyCartMessage();
@@ -231,6 +260,7 @@ const clickAddToCart = (element) => {
     }
 }
 
+// function is invoked when user clicks anywhere on screen
 export const buttonPressed = (event) =>{
     let buttonPressed = findButtonPressed(event, increaseButton);
     if (buttonPressed != -1){
