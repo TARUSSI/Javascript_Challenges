@@ -19,7 +19,12 @@ module.exports = {
   },
   plugins: ["react", "prettier", "@typescript-eslint"],
   rules: {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
     semi: ["error", "always"],
     quotes: ["error", "double"],
     "arrow-body-style": "off",

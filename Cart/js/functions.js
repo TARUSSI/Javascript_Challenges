@@ -63,7 +63,7 @@ const setButtonToAddToCart = (element) => {
 // function adds image of item to the cart
 const addImageToCart = (foodItem, cart) => {
   let divTag = createDivTag();
-  let imgSrc = "images/" + menuItems[foodItem].image;
+  let imgSrc = `images/${menuItems[foodItem].image}`;
   let altName = menuItems[foodItem].alt;
 
   divTag.classList.add("plate");
@@ -78,7 +78,7 @@ const addNameToCart = (foodItem, cart) => {
   let divTag = createDivTag("content");
 
   divTag.append(createPTag("menu-item", menuItems[foodItem].name));
-  divTag.append(createPTag("price", "$" + menuItems[foodItem].price));
+  divTag.append(createPTag("price", `$${menuItems[foodItem].price}`));
 
   cart.appendChild(divTag);
 };
@@ -102,7 +102,7 @@ const addButtonsToCart = (cart) => {
 
 // function adds price to cart
 const addPriceToCart = (foodItem, cart) => {
-  let divTag = createDivTag("subtotal", "$" + menuItems[foodItem].price);
+  let divTag = createDivTag("subtotal", `$${menuItems[foodItem].price}`);
   cart.append(divTag);
 };
 
@@ -169,6 +169,19 @@ const isQuantityZero = (foodItem) => {
   return parseInt(foodItem.querySelector(".quantity").innerText) === 0;
 };
 
+// function checks if both texts are same or not
+const isSame = (firstText, secondText) => {
+  return (
+    removeSpecialChar(firstText.toLowerCase()) ===
+    removeSpecialChar(secondText.toLowerCase())
+  );
+};
+
+// function removes special characters
+const removeSpecialChar = (text) => {
+  return text.replace(/[^a-zA-Z]/g, "");
+};
+
 // function displays message that cart is empty
 const displayEmptyCartMessage = () => {
   document.querySelector(".empty").style.visibility = "visible";
@@ -198,21 +211,29 @@ const updateSubtotal = (foodItem) => {
   let subtotal = foodItem.querySelector(".subtotal");
   let amount = foodItem.querySelectorAll(".quantity")[0].innerText;
   let total = (amount * getCost(cost)).toFixed(2);
-  subtotal.innerText = "$" + total;
+  subtotal.innerText = `$${total}`;
+};
+
+const getIndexWhereText = (text, element) => {
+  for (let index = 0; index < element.length; index++) {
+    if (isSame(element[index].innerText, text)) {
+      return index;
+    }
+  }
 };
 
 // function updates total cost in cart
 const updateTotalCost = (topCart, bottomCart) => {
   let allCost = bottomCart.querySelectorAll(".amount");
+  let label = bottomCart.querySelectorAll(".label");
   let subtotal = parseFloat(costInCart(topCart));
   let tax = (taxRate * subtotal).toFixed(2);
   let total = subtotal + parseFloat(tax);
 
   ///// use find index instead
-  ///// use `` instead
-  allCost[0].innerText = "$" + subtotal;
-  allCost[1].innerText = "$" + tax;
-  allCost[2].innerText = "$" + total.toFixed(2);
+  allCost[getIndexWhereText("subtotal", label)].innerText = `$${subtotal}`;
+  allCost[getIndexWhereText("tax", label)].innerText = `$${tax}`;
+  allCost[getIndexWhereText("total", label)].innerText = `$${total.toFixed(2)}`;
 };
 
 // function updates the list containing all increase/decrease buttons
