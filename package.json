@@ -34,9 +34,9 @@
     "stylelint-require-units": "^1.0.2"
   },
   "dependencies": {
+    "eslint-config-standard": "^17.0.0",
     "eslint-plugin-node": "^11.1.0",
-    "html": "^1.0.0",
-    "stylelint": "^14.9.1"
+    "html": "^1.0.0"
   },
   "lint-staged": {
     "*.js": [
