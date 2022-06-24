@@ -17,4 +17,4 @@ jobs:
         with:
           node-version: 14
       - name: Deploy
-        run: aws s3 sync ./output s3://tarussi.singh-js-challenges
+        run: aws s3 sync ./output s3://${{ secrets.AWS_BUCKET_NAME }}
