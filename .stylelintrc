@@ -1,6 +1,18 @@
 {
-  "plugins": ["stylelint-require-units"],
+  "extends": ["stylelint-config-standard"],
   "rules": {
-    "matterialize/stylelint-require-units": true
+    "color-no-invalid-hex": true,
+    "indentation": 2,
+    "no-missing-end-of-source-newline": null,
+    "length-zero-no-unit": [
+      true,
+      {
+        "ignore": ["custom-properties"]
+      }
+    ],
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": null,
+    "color-hex-length": "long",
+    "alpha-value-notation": "number"
   }
 }

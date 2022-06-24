@@ -45,5 +45,7 @@ module.exports = {
   rules: {
     "linebreak-style": 0,
     indent: ["error", 4],
+    eqeqeq: 0,
+    camelcase: ["error", { properties: "never" }],
   },
 };
