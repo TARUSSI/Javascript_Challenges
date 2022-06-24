@@ -5,7 +5,7 @@ on: [push]
     #   - 'feature/**'
     #   - develop
 jobs:
-  Check ESLint:
+  Check_ESLint:
     runs-on: windows-latest
     steps:
       - name: Checkout
