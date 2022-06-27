@@ -24,13 +24,14 @@ jobs:
       - uses: actions/checkout@master
       - uses: jakejarvis/s3-sync-action@master
         with:
-          args: --acl public-read --follow-symlinks --delete --exclude '.git/*' --exclude '.github/*' --exclude '.husky/*' --exclude 'package.json' --exclude 'package-lock.json' --exclude '.stylelintrc' --exclude '.prettierrc.js' --exclude '.eslintcache' --exclude '.gitignore' --exclude '.eslintrc.js' --exclude 'node_modules/*' --exclude 'README.md'
+          # args: --acl public-read --follow-symlinks --delete --exclude '.git/*' --exclude '.github/*' --exclude '.husky/*' --exclude 'package.json' --exclude 'package-lock.json' --exclude '.stylelintrc' --exclude '.prettierrc.js' --exclude '.eslintcache' --exclude '.gitignore' --exclude '.eslintrc.js' --exclude 'node_modules/*' --exclude 'README.md'
+          args: --acl public-read --follow-symlinks --delete --include 'output/*'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET_NAME }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_SECRET_ACCESSKEY_ID}}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Cloudfront CacheBurst
-        run: aws cloudfront create-invalidation --distribution-id ${{secrets.DISTRIBUTION}} --paths "output/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{secrets.DISTRIBUTION}} --paths "/*"
         env:
           AWS_REGION: "us-east-1"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_SECRET_ACCESSKEY_ID }}
