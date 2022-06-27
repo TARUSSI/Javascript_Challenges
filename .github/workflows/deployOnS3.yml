@@ -18,7 +18,7 @@ jobs:
           node-version: 14
       - name: Deploy
         run: aws s3 sync ./output s3://${{ secrets.AWS_BUCKET_NAME }}
-    Deploy_on_cloudfront:
+  Deploy_on_cloudfront:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
